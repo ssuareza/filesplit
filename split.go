@@ -20,7 +20,7 @@ type Chunk struct {
 	Content []byte
 }
 
-// Split chunk a file in pieces.
+// Split splits a file in smaller pieces.
 func Split(file string) ([]Chunk, error) {
 	var chunks []Chunk
 
