@@ -63,6 +63,34 @@ func Split(file string) ([]Chunk, error) {
 	return chunks, nil
 }
 
+// SplitFromBytes is the same than Split but accepts a []byte
+func SplitFromBytes(file []byte) ([]Chunk, error) {
+	var chunks []Chunk
+
+	fileSize := int64(len(file))
+
+	// files larger than fileMaxSize should be rejected
+	if fileSize > fileMaxSize {
+		return nil, fmt.Errorf("Sorry, we don't process files larger than %v bytes", fileMaxSize)
+	}
+
+	// calculate total number of parts the file will be chunked into
+	chunksNumber := uint64(math.Ceil(float64(fileSize) / float64(fileChunk)))
+
+	// split file
+	for i := uint64(0); i < chunksNumber; i++ {
+		chunkSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
+		chunkBuffer := make([]byte, chunkSize)
+
+		fileIndex := strconv.FormatUint(i, 10)
+
+		// store chunk in struct
+		chunks = append(chunks, Chunk{Name: fileIndex, Content: chunkBuffer})
+	}
+
+	return chunks, nil
+}
+
 // Save saves chunks into files.
 func Save(chunks []Chunk, path string) error {
 	for _, chunk := range chunks {
