@@ -1,7 +1,6 @@
 package filesplit
 
 import (
-	"fmt"
 	"io/ioutil"
 	"testing"
 )
