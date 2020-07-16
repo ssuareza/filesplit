@@ -57,7 +57,7 @@ func TestSave(t *testing.T) {
 		t.Errorf("Not able to create \"%s\" file", file)
 	}
 
-	// chunk it
+	// split it
 	chunks, err := Split(file)
 	if err != nil {
 		t.Errorf("Not able to split file")

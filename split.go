@@ -14,7 +14,7 @@ const (
 	fileMaxSize = 52428800
 )
 
-// Chunk contains the file chunk data.
+// Chunk contains the file split.
 type Chunk struct {
 	Name    string
 	Content []byte
@@ -63,7 +63,7 @@ func Split(file string) ([]Chunk, error) {
 	return chunks, nil
 }
 
-// SplitFromBytes is the same than Split but accepts a []byte
+// SplitFromBytes is the same than Split but accepts a []byte.
 func SplitFromBytes(file []byte) ([]Chunk, error) {
 	var chunks []Chunk
 
@@ -91,7 +91,7 @@ func SplitFromBytes(file []byte) ([]Chunk, error) {
 	return chunks, nil
 }
 
-// Save saves chunks into files.
+// Save saves splits into files.
 func Save(chunks []Chunk, path string) error {
 	for _, chunk := range chunks {
 		if err := ioutil.WriteFile(path+chunk.Name, chunk.Content, 0644); err != nil {
